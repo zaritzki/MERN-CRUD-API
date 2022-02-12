@@ -1,0 +1,21 @@
+{
+  "name": "mern-rest-api",
+  "version": "1.0.0",
+  "description": "Rest API using MERN (MongoDB, Express, React and Node)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
+  },
+  "author": "Czarnie Salazar",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
