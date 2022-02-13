@@ -27,7 +27,7 @@ const registerUser = asyncHandler(async (req, res) => {
 	const hashedPassword = await bcrypt.hash(password, salt)
 
 	// Create user
-	const user = await userSchema.create({
+	const userData = await userSchema.create({
 		email,
 		password: hashedPassword,
 		name,
@@ -35,16 +35,16 @@ const registerUser = asyncHandler(async (req, res) => {
 	})
 
 	// Double check if the user is created
-	if (user) {
+	if (userData) {
 		res.status(201).json({
-			_id: user.id,
-			email: user.email,
-			name: user.name,
-			userType: user.userType,
+			_id: userData.id,
+			email: userData.email,
+			name: userData.name,
+			userType: userData.userType,
 		})
 	} else {
 		res.status(400)
-		throw new Error({ message: 'Invalid user data' })
+		throw new Error('Invalid user data')
 	}
 })
 
@@ -52,7 +52,23 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
-	res.json({ message: 'Login User' })
+	const { email, password } = req.body
+
+	// Check for user email
+	const userData = await userSchema.findOne({ email })
+
+	// Check for user password
+	if (userData && (await bcrypt.compare(password, userData.password))) {
+		res.json({
+			_id: userData.id,
+			email: userData.email,
+			name: userData.name,
+			userType: userData.userType,
+		})
+	} else {
+		res.status(400)
+		throw new Error('Invalid user credentials')
+	}
 })
 
 // @desc    Get user data
