@@ -19,7 +19,7 @@ const registerUser = asyncHandler(async (req, res) => {
 	const userExists = await userSchema.findOne({ email })
 	if (userExists) {
 		res.status(400)
-		throw new Error({ message: 'Email already exists' })
+		throw new Error('Email already exists')
 	}
 
 	// Hash use password
@@ -37,10 +37,11 @@ const registerUser = asyncHandler(async (req, res) => {
 	// Double check if the user is created
 	if (userData) {
 		res.status(201).json({
-			_id: userData.id,
+			_id: userData._id,
 			email: userData.email,
 			name: userData.name,
 			userType: userData.userType,
+			token: _generateToken(userData._id),
 		})
 	} else {
 		res.status(400)
@@ -59,11 +60,12 @@ const loginUser = asyncHandler(async (req, res) => {
 
 	// Check for user password
 	if (userData && (await bcrypt.compare(password, userData.password))) {
-		res.json({
-			_id: userData.id,
+		res.status(202).json({
+			_id: userData._id,
 			email: userData.email,
 			name: userData.name,
 			userType: userData.userType,
+			token: _generateToken(userData._id),
 		})
 	} else {
 		res.status(400)
@@ -73,10 +75,22 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // @desc    Get user data
 // @route   GET /api/users/me
-// @access  Public
+// @access  Private
 const getMyDetails = asyncHandler(async (req, res) => {
-	res.json({ message: 'My details' })
+	const { _id, name, email, userType } = await userSchema.findById(req.user.id)
+
+	res.status(200).json({
+		_id: _id,
+		email,
+		name,
+		userType,
+	})
 })
+
+// Generate JWT
+const _generateToken = (id) => {
+	return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' })
+}
 
 module.exports = {
 	registerUser,
