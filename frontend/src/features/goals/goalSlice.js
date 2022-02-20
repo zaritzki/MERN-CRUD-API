@@ -18,15 +18,15 @@ export const createGoal = createAsyncThunk(
 			return await goalService.createGoal(goalData, token)
 		} catch (err) {
 			const message =
-				(err.response && err.response.data && err.data.message) ||
+				(err.response && err.response.data && err.response.data.message) ||
 				err.message ||
 				err.toString()
-
 			return thunkAPI.rejectWithValue(message)
 		}
 	}
 )
 
+// Get user goals
 // Get user goals
 export const getGoals = createAsyncThunk(
 	'goals/getAll',
@@ -36,10 +36,9 @@ export const getGoals = createAsyncThunk(
 			return await goalService.getGoals(token)
 		} catch (err) {
 			const message =
-				(err.response && err.response.data && err.data.message) ||
+				(err.response && err.response.data && err.response.data.message) ||
 				err.message ||
 				err.toString()
-
 			return thunkAPI.rejectWithValue(message)
 		}
 	}
@@ -48,16 +47,15 @@ export const getGoals = createAsyncThunk(
 // Delete user goal
 export const deleteGoal = createAsyncThunk(
 	'goals/delete',
-	async (goalId, thunkAPI) => {
+	async (id, thunkAPI) => {
 		try {
 			const token = thunkAPI.getState().auth.user.token
-			return await goalService.deleteGoal(goalId, token)
+			return await goalService.deleteGoal(id, token)
 		} catch (err) {
 			const message =
-				(err.response && err.response.data && err.data.message) ||
+				(err.response && err.response.data && err.response.data.message) ||
 				err.message ||
 				err.toString()
-
 			return thunkAPI.rejectWithValue(message)
 		}
 	}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
 import { getGoals, reset } from '../features/goals/goalSlice'
 
@@ -12,27 +13,27 @@ const Dashboard = () => {
 	// init
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
+
 	const { user } = useSelector((state) => state.auth)
-	const { goals, isLoading, isSuccess, isError, message } = useSelector(
+	const { goals, isLoading, isError, message } = useSelector(
 		(state) => state.goals
 	)
 
 	useEffect(() => {
 		if (isError) {
-			console.log(message)
+			toast.error(message)
 		}
+
 		if (!user) {
 			navigate('/login') // redirect to login
 		}
 
-		if (isSuccess) {
-			dispatch(getGoals())
-		}
+		dispatch(getGoals())
 
 		return () => {
 			dispatch(reset())
 		}
-	}, [user, navigate, isSuccess, isError, message, dispatch])
+	}, [user, navigate, isError, message, dispatch])
 
 	if (isLoading) {
 		return <Spinner />
@@ -42,7 +43,7 @@ const Dashboard = () => {
 		<>
 			<section className='heading'>
 				<h1>Welcome {user && user.name}!</h1>
-				<p>Goal Dashboard</p>
+				<p>Goals Dashboard</p>
 			</section>
 
 			<GoalForm />

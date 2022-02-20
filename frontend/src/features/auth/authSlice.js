@@ -21,7 +21,7 @@ export const register = createAsyncThunk(
 			return await authService.register(user)
 		} catch (err) {
 			const message =
-				(err.response && err.response.data && err.data.message) ||
+				(err.response && err.response.data && err.response.data.message) ||
 				err.message ||
 				err.toString()
 

@@ -49,9 +49,34 @@ const Register = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 
+		let formValid = true
+
+		if (name === '') {
+			formValid = false
+			toast.error('Please enter your name')
+		}
+
+		if (email === '') {
+			formValid = false
+			toast.error('Please enter your email')
+		}
+
+		if (password === '') {
+			formValid = false
+			toast.error('Please enter your password')
+		}
+
+		if (confirmPassword === '') {
+			formValid = false
+			toast.error('Please confirm your password')
+		}
+
 		if (password !== confirmPassword) {
+			formValid = false
 			toast.error('Password do not match')
-		} else {
+		}
+
+		if (formValid) {
 			const userData = {
 				name,
 				email,
