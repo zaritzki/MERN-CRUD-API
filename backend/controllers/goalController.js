@@ -17,7 +17,7 @@ const getGoals = asyncHandler(async (req, res) => {
 const setGoal = asyncHandler(async (req, res) => {
 	if (!req.body.text) {
 		res.status(400)
-		throw new Error('Missing body text')
+		throw new Error('Please add a text field')
 	}
 
 	const goalData = await goalSchema.create({
@@ -47,7 +47,7 @@ const updateGoal = asyncHandler(async (req, res) => {
 	// Making sure only the logged in user matches the goal user
 	if (goalData.user.toString() !== req.user.id) {
 		res.status(401)
-		throw new Error('User not found')
+		throw new Error('User not authorized')
 	}
 
 	const updatedGoal = await goalSchema.findByIdAndUpdate(
@@ -57,6 +57,7 @@ const updateGoal = asyncHandler(async (req, res) => {
 			new: true,
 		}
 	)
+
 	res.status(200).json(updatedGoal)
 })
 
@@ -80,7 +81,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
 	// Making sure only the logged in user matches the goal user
 	if (goalData.user.toString() !== req.user.id) {
 		res.status(401)
-		throw new Error('User not found')
+		throw new Error('User not authorized')
 	}
 
 	await goalData.remove()

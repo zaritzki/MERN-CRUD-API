@@ -44,7 +44,7 @@ const Login = () => {
 		}))
 	}
 
-	const onSubmit = (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault()
 
 		let formValid = true
@@ -80,7 +80,7 @@ const Login = () => {
 				<p>Login your account</p>
 			</section>
 			<section className='form'>
-				<form onSubmit={onSubmit}>
+				<form onSubmit={handleSubmit}>
 					<div className='form-group'>
 						<input
 							type='email'
