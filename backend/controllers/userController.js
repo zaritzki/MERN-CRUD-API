@@ -79,12 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
 const getMyDetails = asyncHandler(async (req, res) => {
 	const { _id, name, email, userType } = await userSchema.findById(req.user.id)
 
-	res.status(200).json({
-		_id: _id,
-		email,
-		name,
-		userType,
-	})
+	res.status(200).json(req.user)
 })
 
 // Generate JWT
