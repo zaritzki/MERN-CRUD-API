@@ -47,12 +47,24 @@ const Login = () => {
 	const onSubmit = (e) => {
 		e.preventDefault()
 
-		const userData = {
-			email,
-			password,
+		let formValid = true
+
+		if (email === '') {
+			formValid = false
+			toast.error('Please enter your email')
+		}
+		if (password === '') {
+			formValid = false
+			toast.error('Please enter your password')
 		}
 
-		dispatch(login(userData))
+		if (formValid) {
+			const userData = {
+				email,
+				password,
+			}
+			dispatch(login(userData))
+		}
 	}
 
 	if (isLoading) {
