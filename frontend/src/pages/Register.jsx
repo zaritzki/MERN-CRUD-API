@@ -33,7 +33,7 @@ const Register = () => {
 		}
 
 		if (isSuccess || user) {
-			navigate('/') // redirect to dashboard
+			navigate('/dashboard') // redirect to dashboard
 		}
 
 		// dispatch to reset
