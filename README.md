@@ -3,8 +3,8 @@
 Simple MERN CRUD API with JWT Authentication
 MongoDB, Express, React and Node  with @reduxjs/toolkit
 
-### `.env`
-After cloning it, you will need to create this .env file.
+### Create a file called `.env` in the root dir
+After cloning it, you will need to create this .env file
 
 ```
 NODE_ENV = development
