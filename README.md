@@ -1,4 +1,23 @@
 # MERN-Simple-API
+
 Simple MERN CRUD API with Authentication using MongoDB, Express, React and Node  with @reduxjs/toolkit
 
 Demo: https://mernapizar.herokuapp.com/
+
+## `.env`
+After cloning it, you will need to create this .env file.
+
+`NODE_ENV = development
+PORT = 5000
+MONGO_URI =  {your mongoDB connection }
+JWT_SECRET = {your key}`
+
+## Available Scripts
+
+In the project directory, you can run:
+
+# `npm run dev`
+
+## Demo
+
+https://mernapizar.herokuapp.com/
